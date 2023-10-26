@@ -2,6 +2,7 @@ const { mongoose } = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const { UNAUTHORIZED } = require('../utils/constants');
+const CastomError = require('../utils/errors/CastomError');
 
 const userSchema = new mongoose.Schema(
   {
@@ -31,12 +32,12 @@ const userSchema = new mongoose.Schema(
 userSchema.statics.checkUser = async function (email, password) {
   const user = await this.findOne({ email }).select('+password');
   if (!user) {
-    return Promise.reject(new Error('Неверная почта или пароль', UNAUTHORIZED));
+    return Promise.reject(new CastomError('Неверная почта или пароль', UNAUTHORIZED));
   }
   const match = await bcrypt.compare(password, user.password);
 
   if (!match) {
-    return Promise.reject(new Error('Неверная почта или пароль', UNAUTHORIZED));
+    return Promise.reject(new CastomError('Неверная почта или пароль', UNAUTHORIZED));
   }
 
   return user;
