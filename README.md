@@ -1,16 +1,9 @@
-[![Tests](../../actions/workflows/tests-13-sprint.yml/badge.svg)](../../actions/workflows/tests-13-sprint.yml) [![Tests](../../actions/workflows/tests-14-sprint.yml/badge.svg)](../../actions/workflows/tests-14-sprint.yml)
+# Дипломный проект movie-explorer-api
 
-# Проект [Mesto](https://github.com/FreakPerry/express-mesto-gha) фронтенд + бэкенд
+## Описание
 
-## Директории
+ Api для дипломного проекта movie-explorer.
 
-`/routes` — папка с файлами роутера  
-`/controllers` — папка с файлами контроллеров пользователя и карточки  
-`/models` — папка с файлами описания схем пользователя и карточки
+## Ссылка на проект
 
-Остальные директории вспомогательные, создаются при необходимости разработчиком
-
-## Запуск проекта
-
-`npm run start` — запускает сервер  
-`npm run dev` — запускает сервер с hot-reload
+ https://api.e-tatarenko.diploma.nomoredomainsrocks.ru
