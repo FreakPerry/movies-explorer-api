@@ -12,6 +12,8 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { registerValidator, loginValidator } = require('./utils/validators/userValidator');
 const { DATABASE_URL, PORT } = require('./utils/config');
 const { limiter } = require('./utils/limiter');
+const CastomError = require('./utils/errors/CastomError');
+const { NOT_FOUND } = require('./utils/constants');
 
 const app = express();
 
@@ -44,6 +46,8 @@ app.use(authMiddleware);
 
 app.post('/logout', logout);
 app.use(appRouter);
+app.use('*', (req, res, next) =>
+  next(new CastomError('The requested page was not found', NOT_FOUND)));
 
 app.use(errorLogger);
 
