@@ -11,8 +11,7 @@
     ],
     "object-curly-newline": ["error", { "consistent": true }],
     "implicit-arrow-linebreak": "off",
-    "function-paren-newline": ["error", "multiline"],
-    "no-use-before-define": ["error", { "functions": false, "classes": true }],
+    "function-paren-newline": ["error", "allow"]
   },
   "env": {
     "node": true,

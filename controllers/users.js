@@ -2,7 +2,13 @@ const { default: mongoose } = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const userModel = require('../models/user');
-const { OK, NOT_FOUND, BAD_REQUEST, CREATED, CONFLICT } = require('../utils/constants');
+const {
+  OK,
+  NOT_FOUND,
+  BAD_REQUEST,
+  CREATED,
+  CONFLICT,
+} = require('../utils/constants');
 const CastomError = require('../utils/errors/CastomError');
 const { JWT_SECRET } = require('../utils/config');
 
@@ -22,9 +28,16 @@ const createUser = async (req, res, next) => {
     return res.status(CREATED).send(userWithoutPassword);
   } catch (e) {
     if (e.code === 11000) {
-      next(new CastomError('User with this email already exists', CONFLICT));
+      next(
+        new CastomError('Пользователь с таким email уже существует.', CONFLICT),
+      );
     } else if (e instanceof mongoose.Error.ValidationError) {
-      next(new CastomError('Invalid data entered', BAD_REQUEST));
+      next(
+        new CastomError(
+          'При регистрации пользователя произошла ошибка',
+          BAD_REQUEST,
+        ),
+      );
     } else {
       next(e);
     }
@@ -90,11 +103,17 @@ const getMe = (req, res, next) => {
 
 const updateUser = async (req, res, next) => {
   try {
-    const { email, name } = req.body;
-    const updatedUser = await userModel.findByIdAndUpdate(req.user._id, { email, name }, {
-      new: true,
-      runValidators: true,
-    }).orFail();
+    const { name, email } = req.body;
+    const updatedUser = await userModel
+      .findByIdAndUpdate(
+        req.user._id,
+        { name, email },
+        {
+          new: true,
+          runValidators: true,
+        },
+      )
+      .orFail();
 
     res.status(OK).send(updatedUser);
   } catch (e) {
